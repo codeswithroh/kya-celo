@@ -1,0 +1,13 @@
+# Render's free plan sleeps after 15 idle minutes; a paying agent should not wait for a cold start.
+# Set the repo variable KYA_URL (Settings -> Secrets and variables -> Actions -> Variables).
+name: keep-alive
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    if: ${{ vars.KYA_URL != '' }}
+    steps:
+      - run: curl -fsS --retry 3 --max-time 90 "${{ vars.KYA_URL }}/health"

@@ -1,0 +1,25 @@
+# Render Blueprint: New -> Blueprint -> pick this repo. Free web service, built from the Dockerfile.
+services:
+  - type: web
+    name: kya
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: X402_NETWORK
+        value: mainnet
+      - key: ATTRIBUTION_CODE
+        value: celo_9a5077c029be
+      - key: BUY_ENABLED
+        value: "0"
+      # Set these in the Render dashboard (never committed):
+      - key: DATABASE_URL        # Supabase transaction pooler string, port 6543
+        sync: false
+      - key: AGENT_PRIVATE_KEY
+        sync: false
+      - key: X402_API_KEY
+        sync: false
+      - key: PUBLIC_URL          # https://<service>.onrender.com, no trailing slash
+        sync: false
+      - key: KYA_AGENT_ID        # after `npm run register`
+        sync: false

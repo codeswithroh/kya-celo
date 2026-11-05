@@ -1,0 +1,50 @@
+{
+  "name": "kya",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Know Your Agent: pay-per-check trust verdicts for agent wallets on Celo, sold over x402.",
+  "scripts": {
+    "dev": "concurrently -n api,web -c blue,green \"tsx watch server/index.ts\" \"vite\"",
+    "build": "vite build",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "typecheck": "tsc --noEmit",
+    "wallet": "tsx scripts/wallet.ts",
+    "register": "tsx scripts/register-8004.ts",
+    "pay-check": "tsx scripts/pay-check.ts",
+    "mcp": "tsx mcp/server.ts"
+  },
+  "engines": {
+    "node": ">=22.5"
+  },
+  "dependencies": {
+    "@celo/attribution-tags": "^0.5.0",
+    "@electric-sql/pglite": "^0.5.15",
+    "@hono/node-server": "^2.1.6",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@x402/core": "^2.29.0",
+    "@x402/evm": "^2.29.0",
+    "@x402/fetch": "^2.29.0",
+    "@x402/hono": "^2.29.0",
+    "dotenv": "^18.0.9",
+    "hono": "^4.13.16",
+    "postgres": "^3.4.9",
+    "tsx": "^4.23.15",
+    "viem": "^2.57.16",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.4",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "concurrently": "^10.0.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.10.1",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  }
+}
