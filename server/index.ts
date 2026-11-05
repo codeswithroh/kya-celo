@@ -189,6 +189,15 @@ if (existsSync("dist/index.html")) {
   app.get("*", (c) => c.html(readFileSync("dist/index.html", "utf8")));
 }
 
-serve({ fetch: app.fetch, port: PORT }, () => {
+// Behind a TLS-terminating proxy (Railway) the request arrives as http://; x402 advertises the
+// request URL as the resource, so restore the scheme the caller actually used.
+const fetchBehindProxy = (req: Request) => {
+  if (req.headers.get("x-forwarded-proto") === "https" && req.url.startsWith("http:")) {
+    req = new Request(`https:${req.url.slice(5)}`, req);
+  }
+  return app.fetch(req);
+};
+
+serve({ fetch: fetchBehindProxy, port: PORT }, () => {
   console.log(`KYA on ${PUBLIC_URL} (${X402_NETWORK}) paywall=${paywallOn ? "on" : "OFF: set X402_API_KEY and AGENT_PRIVATE_KEY/PAY_TO"} buy=${BUY_ENABLED ? "on" : "off"}`);
 });
